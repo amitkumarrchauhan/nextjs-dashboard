@@ -5,8 +5,11 @@
 		}
 	],
 	"settings": {
-		"cSpell.words": [
-			"lusitana"
-		]
-	}
+    "cSpell.words": ["lusitana"],
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "typescript.preferences.organizeImports": {
+      "caseFirst": "default"
+    }
+  }
 }

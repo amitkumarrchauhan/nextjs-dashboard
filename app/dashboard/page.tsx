@@ -2,13 +2,15 @@ import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
-import { fetchRevenue } from '@/app/lib/data';
+import { fetchLatestInvoices, fetchRevenue } from '@/app/lib/data';
 
 export default async function DashboardPage() {
   console.log('app.DashboardPage.render');
 
   const revenue = await fetchRevenue();
   console.log('revenue: ', revenue);
+  const latestInvoices = await fetchLatestInvoices();
+  console.log('latestInvoices: ', latestInvoices);
 
   return (
     <main>
@@ -26,8 +28,8 @@ export default async function DashboardPage() {
         /> */}
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChart revenue={revenue}  />
-        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
+        <RevenueChart revenue={revenue} />
+        <LatestInvoices latestInvoices={latestInvoices} />
       </div>
     </main>
   );

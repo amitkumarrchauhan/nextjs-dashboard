@@ -7,12 +7,11 @@ import {
   fetchLatestInvoices,
   fetchRevenue,
 } from '@/app/lib/data';
+import { Suspense } from 'react';
+import { RevenueChartSkeleton } from '@/app/ui/skeletons';
 
 export default async function DashboardPage() {
   console.log('app.DashboardPage.render');
-
-  const revenue = await fetchRevenue();
-  console.log('revenue: ', revenue);
   const latestInvoices = await fetchLatestInvoices();
   console.log('latestInvoices: ', latestInvoices);
   const {
@@ -38,7 +37,10 @@ export default async function DashboardPage() {
         />
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChart revenue={revenue} />
+        {/* <RevenueChart revenue={revenue} /> */}
+        <Suspense fallback={<RevenueChartSkeleton />}>
+          <RevenueChart />
+        </Suspense>
         <LatestInvoices latestInvoices={latestInvoices} />
       </div>
     </main>

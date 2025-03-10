@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import postgres from 'postgres';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 
+console.log('process.env.POSTGRES_URL = ', process.env.POSTGRES_URL);
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 async function seedUsers() {
@@ -112,6 +114,7 @@ export async function GET() {
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
+    console.log('error occurred !!!', error);
     return Response.json({ error }, { status: 500 });
   }
 }

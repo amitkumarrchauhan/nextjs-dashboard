@@ -3,12 +3,13 @@
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
   "javascript.suggest.autoImports": true,
   "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
-  "typescript.preferences.organizeImports": {
-    "caseFirst": "default"
-  },
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all"
 }

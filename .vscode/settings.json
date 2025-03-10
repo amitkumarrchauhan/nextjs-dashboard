@@ -2,8 +2,11 @@
   "cSpell.words": ["lusitana"],
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+
   "typescript.preferences.organizeImports": {
     "caseFirst": "default"
   },
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all"
 }

@@ -75,6 +75,9 @@ export const updateInvoice = async (id: string, formData: FormData) => {
 export const deleteInvoice = async (id: string, formData: FormData) => {
   console.log('actions.deleteInvoice ===> ', id, formData);
 
+  // all error caught in the error.tsx
+  // throw new Error('Failed to delete invoice.');
+
   await sql`
     DELETE FROM invoices
     WHERE id = ${id}

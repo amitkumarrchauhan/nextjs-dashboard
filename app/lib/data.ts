@@ -164,6 +164,9 @@ export async function fetchInvoicesPages(query: string) {
 }
 
 export async function fetchInvoiceById(id: string) {
+  // 404 implemented in the page.tsx
+  // return null;
+
   try {
     const data = await sql<InvoiceForm[]>`
       SELECT

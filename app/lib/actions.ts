@@ -17,18 +17,19 @@ const InvoiceFormSchema = z.object({
 const CreateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
 
 const getParsedFormData = (formData: FormData): Invoice => {
-  const rawFormData: Invoice = {} as Invoice;
+  const rawFormData: Partial<Invoice> = {};
   const entries = formData.entries();
 
   for (const keyValues of entries) {
-    const key: string = keyValues[0];
+    const key = keyValues[0] as keyof Invoice;
 
     if (key.includes('$ACTION_ID')) continue;
 
-    rawFormData[key] = keyValues[1];
+    // use never instead of any <--- eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rawFormData[key] = keyValues[1] as never;
   }
 
-  return rawFormData;
+  return rawFormData as Invoice;
 };
 
 export async function createInvoice(formData: FormData) {

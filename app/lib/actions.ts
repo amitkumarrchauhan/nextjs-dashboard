@@ -8,9 +8,17 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 const InvoiceFormSchema = z.object({
   id: z.string(),
-  customerId: z.string(),
-  amount: z.coerce.number(),
-  status: z.enum(['pending', 'paid']),
+  customerId: z.string({
+    required_error: 'Please select a customer.',
+  }),
+  amount: z.coerce
+    .number({
+      required_error: 'Please enter an amount.',
+    })
+    .gt(0, 'Amount must be greater than $0.'),
+  status: z.enum(['pending', 'paid'], {
+    required_error: 'Please select a invoice status.',
+  }),
   date: z.string(),
 });
 
@@ -23,7 +31,7 @@ const getParsedFormData = (formData: FormData): Invoice => {
   for (const keyValues of entries) {
     const key = keyValues[0] as keyof Invoice;
 
-    if (key.includes('$ACTION_ID')) continue;
+    if (key.includes('$ACTION_')) continue;
 
     // use never instead of any <--- eslint-disable-next-line @typescript-eslint/no-explicit-any
     rawFormData[key] = keyValues[1] as never;
@@ -32,17 +40,34 @@ const getParsedFormData = (formData: FormData): Invoice => {
   return rawFormData as Invoice;
 };
 
-export async function createInvoice(formData: FormData) {
+export type State = {
+  errors?: {
+    customerId?: string[];
+    amount?: string[];
+    status?: string[];
+  };
+  message?: string | null;
+};
+
+export async function createInvoice(prevState: State, formData: FormData) {
   console.log('actions.createInvoice ===> ');
+  const rawFormData = getParsedFormData(formData);
+  const validateFields = CreateInvoice.safeParse(rawFormData);
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.',
+    };
+  }
+
+  const { customerId, amount, status } = validateFields.data;
+  const amountInCents = amount * 100;
+  const date = new Date().toISOString().split('T')[0];
 
   // const x = 1;
 
   try {
-    const rawFormData = getParsedFormData(formData);
-    const { customerId, amount, status } = CreateInvoice.parse(rawFormData);
-    const amountInCents = amount * 100;
-    const date = new Date().toISOString().split('T')[0];
-
     await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})

@@ -17,11 +17,11 @@ const InvoiceFormSchema = z.object({
 const CreateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
 
 const getParsedFormData = (formData: FormData): Invoice => {
-  const rawFormData = {} as any;
+  const rawFormData: Invoice = {} as Invoice;
   const entries = formData.entries();
 
   for (const keyValues of entries) {
-    const key = keyValues[0];
+    const key: string = keyValues[0];
 
     if (key.includes('$ACTION_ID')) continue;
 
@@ -33,8 +33,9 @@ const getParsedFormData = (formData: FormData): Invoice => {
 
 export async function createInvoice(formData: FormData) {
   console.log('actions.createInvoice ===> ');
-  const x = 1;
-  
+
+  // const x = 1;
+
   try {
     const rawFormData = getParsedFormData(formData);
     const { customerId, amount, status } = CreateInvoice.parse(rawFormData);
@@ -45,7 +46,7 @@ export async function createInvoice(formData: FormData) {
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
   `;
-  } catch (error) {
+  } catch /* (error) */ {
     throw new Error('Failed to create invoice.');
   }
 
@@ -59,9 +60,9 @@ export const updateInvoice = async (id: string, formData: FormData) => {
   console.log('actions.updateInvoice ===> ', id, formData);
   //
   const rawFormData = getParsedFormData(formData);
-  const { customerId, amount, status } = CreateInvoice.parse(rawFormData);
+  const { customerId, amount, status } = UpdateInvoice.parse(rawFormData);
   const amountInCents = amount * 100;
-  const date = new Date().toISOString().split('T')[0];
+  // const date = new Date().toISOString().split('T')[0];
 
   await sql`
     UPDATE invoices 

@@ -19,17 +19,20 @@
     "react": "latest",
     "react-dom": "latest",
     "tailwindcss": "3.4.17",
-    "typescript": "5.7.3",
     "use-debounce": "10.0.4",
     "zod": "3.24.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@next/eslint-plugin-next": "^15.2.2",
     "@types/bcrypt": "5.0.2",
     "@types/node": "22.10.7",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
-    "eslint": "^9",
+    "eslint": "^9.22.0",
     "eslint-config-next": "15.2.2",
-    "npm-check-updates": "^17.1.15"
+    "npm-check-updates": "^17.1.15",
+    "typescript": "5.7.3",
+    "typescript-eslint": "^8.26.1"
   }
 }

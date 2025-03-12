@@ -13,8 +13,8 @@ const InvoiceUpdatePage = async (props: {
     fetchCustomers(),
   ]);
 
-  const x = '';
-  
+  // const x = '';
+
   if (!invoice) {
     notFound();
   }

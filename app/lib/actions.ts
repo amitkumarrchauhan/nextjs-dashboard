@@ -33,6 +33,7 @@ const getParsedFormData = (formData: FormData): Invoice => {
 
 export async function createInvoice(formData: FormData) {
   console.log('actions.createInvoice ===> ');
+  const x = 1;
   
   try {
     const rawFormData = getParsedFormData(formData);

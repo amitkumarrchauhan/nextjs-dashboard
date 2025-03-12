@@ -33,15 +33,20 @@ const getParsedFormData = (formData: FormData): Invoice => {
 
 export async function createInvoice(formData: FormData) {
   console.log('actions.createInvoice ===> ');
-  const rawFormData = getParsedFormData(formData);
-  const { customerId, amount, status } = CreateInvoice.parse(rawFormData);
-  const amountInCents = amount * 100;
-  const date = new Date().toISOString().split('T')[0];
+  
+  try {
+    const rawFormData = getParsedFormData(formData);
+    const { customerId, amount, status } = CreateInvoice.parse(rawFormData);
+    const amountInCents = amount * 100;
+    const date = new Date().toISOString().split('T')[0];
 
-  await sql`
+    await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
   `;
+  } catch (error) {
+    throw new Error('Failed to create invoice.');
+  }
 
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');

@@ -1,4 +1,10 @@
-const CustomersPage: React.FC = () => {
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Customers',
+};
+
+const CustomersPage = () => {
   console.log('CustomersPage.render');
 
   return (
@@ -6,6 +12,6 @@ const CustomersPage: React.FC = () => {
       <p>Customers Page</p>
     </div>
   );
-}
+};
 
-export default CustomersPage
+export default CustomersPage;

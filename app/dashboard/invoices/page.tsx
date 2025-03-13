@@ -12,11 +12,14 @@ export default async function InvoicesPage(props: {
     query?: string;
     page?: string;
   }>;
+  params: Promise<unknown>;
 }) {
-  console.log('InvoicesPage.props => ', props);
   const searchParams = await props.searchParams;
-
-  console.log('InvoicesPage.searchParams: ', searchParams);
+  const params = await props.params;
+  //
+  console.log('InvoicesPage.params: ', JSON.stringify(params));
+  console.log('InvoicesPage.searchParams: ', JSON.stringify(searchParams));
+  //
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchInvoicesPages(query);

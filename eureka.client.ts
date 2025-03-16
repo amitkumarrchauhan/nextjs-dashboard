@@ -11,6 +11,7 @@ const client: Eureka = new Eureka({
     app: 'nextjsDashboard',
     hostName: 'localhost',
     ipAddr: '127.0.0.1',
+
     port: {
       $: 3000,
       '@enabled': true,
@@ -29,7 +30,7 @@ const client: Eureka = new Eureka({
 });
 
 const EurekaClient = {
-  initAndStart: () => {
+  initAndStart: (config = {}) => {
     try {
       console.log('Initializing Eureka Client ...');
       // create eureka cleint and register with eureka server
@@ -47,12 +48,16 @@ const EurekaClient = {
   stop: () => {
     client.stop();
   },
-  getInstancesByAppId: async (appId: string) => {
+  getInstancesByAppId: (appId: string) => {
     const instances = client.getInstancesByAppId(appId);
 
-    return instances;
+    if (instances.length === 1) {
+      return instances[0];
+    }
+
+    throw new Error(`No instance found for ${appId}`);
   },
-  getInstancesByVipAddress: async (vipAddress: string) => {
+  getInstancesByVipAddress: (vipAddress: string) => {
     const instances = client.getInstancesByVipAddress(vipAddress);
 
     return instances;

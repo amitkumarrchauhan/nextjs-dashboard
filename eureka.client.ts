@@ -8,7 +8,7 @@ import { Eureka } from 'eureka-js-client';
 const client: Eureka = new Eureka({
   // application instance information
   instance: {
-    app: 'nextjsDashboard',
+    app: 'DashboardApp_UI',
     hostName: 'localhost',
     ipAddr: '127.0.0.1',
 
@@ -16,7 +16,7 @@ const client: Eureka = new Eureka({
       $: 3000,
       '@enabled': true,
     },
-    vipAddress: 'nextjsDashboard',
+    vipAddress: 'DashboardUIAppVIP',
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
@@ -26,18 +26,34 @@ const client: Eureka = new Eureka({
     // eureka server host / port
     host: '127.0.0.1',
     port: 8761,
+    servicePath: '/eureka/apps/',
   },
 });
 
+/* client.start((err, ...rest) => {
+  if (err) {
+    console.log('***** Error occurred !!! *****', err);
+    return;
+  }
+
+  console.log('***** Eureka Client Started successfully. *****\n', rest);
+}); */
+
 const EurekaClient = {
-  initAndStart: (config = {}) => {
+  initAndStart: async (/* config = {} */) => {
     try {
       console.log('Initializing Eureka Client ...');
       // create eureka cleint and register with eureka server
       console.log('Initialization Eureka Client completed.\n');
       console.log('Starting Eureka Client ...');
-      client.start();
-      console.log('Eureka Client Started successfully.\n');
+      client.start((err, ...rest) => {
+        if (err) {
+          console.log('***** Error occurred !!! *****', err);
+          return;
+        }
+
+        console.log('***** Eureka Client Started successfully. *****\n', rest);
+      });
     } catch (error) {
       console.log('Error occurred !!!', error);
     }

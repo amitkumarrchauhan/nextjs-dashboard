@@ -7,6 +7,7 @@ import {
   LatestInvoiceRaw,
   Revenue,
 } from './definitions';
+import { fetchData } from './fetch';
 import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, {
@@ -144,6 +145,10 @@ export async function fetchFilteredInvoices(
 
 export async function fetchInvoicesPages(query: string) {
   try {
+    const taskListRes = await fetchData('/work-tracker/tasks');
+    const taskList = await taskListRes.json();
+    console.log('=====> fetched from gateway ::: ', taskList);
+
     const data = await sql`SELECT COUNT(*)
     FROM invoices
     JOIN customers ON invoices.customer_id = customers.id

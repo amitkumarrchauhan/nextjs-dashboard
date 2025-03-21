@@ -15,9 +15,7 @@ Object.keys(env).forEach((key) => {
 let sql: postgres.Sql;
 
 console.log(
-  '------ CONNCTED DB HOST IS: ',
-  env.DB_HOST || env.POSTGRES_HOST,
-  ' ------',
+  '------ CONNCTED DB HOST IS: ' + env.DB_HOST || env.POSTGRES_HOST + ' ------',
 );
 
 if (dbConnectTo === 'localhost') {

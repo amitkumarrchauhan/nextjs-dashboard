@@ -5,6 +5,6 @@ export async function register() {
 
   console.log('EurekaClient ==> ', EurekaClient);
   // setTimeout(() => {
-  EurekaClient.initAndStart();
+  // EurekaClient.initAndStart();
   // }, 1000);
 }
